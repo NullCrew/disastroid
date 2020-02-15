@@ -18,7 +18,7 @@ def create_image_dataset(uname):
 			time.sleep(5)
 		cv2.imwrite("media/train/"+name+"/image%04i.jpg" %cpt, frame)    #Give path to  train-images/0/ and keep image%04i.jpg as it is in this line. Your images will be stored at train-images/0/ folder
 		cpt += 1
-		if cpt == 4:
+		if cpt == 10:
 			cv2.destroyAllWindows()
 			break
 			

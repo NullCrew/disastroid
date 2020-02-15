@@ -113,7 +113,7 @@ def predict(X_img_path, knn_clf=None, model_path=None, distance_threshold=0.6):
 
 def predict1(img_path):
     full_file_path = img_path
-    predictions = predict(full_file_path, model_path="trained_knn_model.clf", distance_threshold=0.8)
+    predictions = predict(full_file_path, model_path="trained_knn_model.clf", distance_threshold=0.4)
     if predictions == []:
         print(False)
         return(False)
