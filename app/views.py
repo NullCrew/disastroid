@@ -12,6 +12,11 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Victim
 from django.http import HttpResponse, JsonResponse
 import cloudinary
+import calendar
+import time
+import fr
+import create_dataset
+ts = str(calendar.timegm(time.gmtime()))
 cloudinary.config(
 				cloud_name="ibhanu",
 				api_key="518449793756128",
@@ -24,7 +29,7 @@ import requests
 import urllib.request, urllib.parse, urllib.error
 import os
 from PyDictionary import PyDictionary
-
+imgname = 'media/pictures/img.jpg'
 # import simplejson as simplejson
 
 def heatmap(request):
@@ -416,47 +421,42 @@ def upload(request):
 			)
 	if request.method == 'POST':
 		# print 'yes'
+		global imgname
 		handle_uploaded_file(request.FILES['webcam'])
-		headers = {
-			# Request headers
-			'Content-Type'             : 'application/json',
-			'Ocp-Apim-Subscription-Key': 'KRjQg_J96Tn7fkKBVT8g9B16rlU',
-		}
 		module_dir = os.path.dirname(__file__)
-		img = os.path.join(module_dir, 'media/pictures/img.jpg')
-		cloud = cloudinary.uploader.upload(img)
-		victim = Victim.objects.create(url=cloud['url'])
-		# victim = Victim.objects.create(picture=request.FILES['webcam'])
-		r = detect_face(headers, cloud)
-		print(r)
-		print(r.json())
-		faceId = r.json()[0]['faceId']
-		r = find_similar(headers, cloud, faceId)
+		img = os.path.join(module_dir, imgname)
+		frResponse = str(fr.predict1(img))
+		print(frResponse)
+		if frResponse == 'unknown':
 
-		if len(r.json()) > 0:
-			res = "Matched with:" + r.json()[0]['persistedFaceId']
+			res = 'unknown face'
+			print(res)
+			return JsonResponse({'found': 'unknown', 'res': res})
+
+		elif frResponse == 'False':
+			res = 'Face not found'
+			print(res)
+			return JsonResponse({'found': 'False', 'res': res})
+		else:
+			res = "Matched with: "+ frResponse
 			print(res)
 			return JsonResponse({'found': 'True', 'res': res})
-			# return (200, res)
-		else:
-			r = add_to_list(headers, cloud)
-			res = 'Face added to list' + r.text
-			print(res)
-			faceId = r.json()['persistedFaceId']
-			victim.pic_id = faceId
-			victim.save()
-			return JsonResponse({'found': 'False', 'res': res})
-		print((r.text))
 
 
 def save_victim(request):
+
 	victim = Victim.objects.latest('url')
 	victim.name = request.POST.get('name')
 	victim.age = request.POST.get('age')
-	victim.age = '21'
+	# victim.age = '21'
 	victim.gender = request.POST.get('gender')
-	victim.gender = 'M'
+	# victim.gender = 'M'
 	victim.save()
+	print(victim.name)
+	create_dataset.create_image_dataset(victim.name)
+	res = 'Face added to list' + victim.name
+	fr.train("media/train", model_save_path="trained_knn_model.clf", n_neighbors=2)
+	
 	return render(request, 'snap.html', {'show': True})
 
 
@@ -483,6 +483,7 @@ def attackers(request):
 def find_missing_person(request):
 	if request.method == 'POST':
 		notfound = False
+		global imgname
 		if request.POST.get('name'):
 			name = request.POST.get('name')
 			victim = Victim.objects.get(name=name)
@@ -501,7 +502,7 @@ def find_missing_person(request):
 				'Ocp-Apim-Subscription-Key': '',
 			}
 			module_dir = os.path.dirname(__file__)
-			img = os.path.join(module_dir, 'media/pictures/img.jpg')
+			img = os.path.join(module_dir, imgname)
 			cloud = cloudinary.uploader.upload(img)
 			r = detect_face(headers, cloud)
 			faceId = r.json()[0]['faceId']
@@ -526,8 +527,11 @@ def find_missing_person(request):
 
 
 def handle_uploaded_file(f):
+	global imgname 
+	ts = str(calendar.timegm(time.gmtime()))
+	imgname = 'media/pictures/img.jpg'
 	module_dir = os.path.dirname(__file__)
-	img = os.path.join(module_dir, 'media/pictures/img.jpg')
+	img = os.path.join(module_dir, imgname)
 	destination = open(img, 'wb+')
 	for chunk in f.chunks():
 		destination.write(chunk)
