@@ -120,7 +120,7 @@ pyasn1==0.1.9
 pycosat==0.6.1
 pycparser==2.14
 pycrypto==2.6.1
-pycryptodome==3.4.3
+pycryptodome==3.6.6
 pycurl==7.43.0
 PyDictionary==1.5.2
 pyethash==0.1.27
