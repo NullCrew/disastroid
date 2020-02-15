@@ -60,8 +60,10 @@
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
+          
           center: {lat:{{clat}} , lng: {{clng}}},
           mapTypeId: 'satellite'
+          
         });
 
         heatmap = new google.maps.visualization.HeatmapLayer({
@@ -102,7 +104,7 @@
         heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
       }
 
-      // Heatmap data: 500 Points
+      // Heatmap data: 50030 Points
       function getPoints() {
         return [
           {% for lat,lng in cord%}
