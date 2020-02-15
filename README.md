@@ -63,19 +63,18 @@ A one stop solution to avoid getting caught in disasters.
 
 ## Installation Guidelines
 
-1. Clone the repository.
+1. Clone the repository:
 `git clone https://github.com/NullCrew/Disastroid.git`
-2. Switch to the project directory.
+2. Switch to the project directory:
 `cd Disastroid`
-3. Install dependencies.
+3. Install dependencies:
 `pip3 install -r "requirements.txt"`
-4. Start the server.
+4. Start the server:
 `python3 manage.py runserver`
-5. Navigate to the site.
+5. Navigate to the site:
 `http://localhost:8000`
 
 
-
+# A NullCrew Project
 ![NullCrew](logo.png)
 
-# A NullCrew Project
