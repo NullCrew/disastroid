@@ -12,7 +12,7 @@ def create_image_dataset(uname):
 		
 		ret, frame = vidStream.read() # read frame and return code.
 		
-		cv2.imshow("test window", frame) # show image in window
+		#cv2.imshow("test window", frame) # show image in window
 		if cpt ==0:
 			print("Be Ready!")
 			time.sleep(5)
