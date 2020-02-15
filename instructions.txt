@@ -1,0 +1,19 @@
+Prerequisites
+-------------------------------------------------------------------------------
+* OS: Windows, Linux or Mac
+* Python 3 installed along with Django framework
+* RAM: 8 GB or more
+* Processor: Intel i5 (and its equivalents) or higher
+* Webcam
+
+Installation Guidelines
+-------------------------------------------------------------------------------
+1. Clone the repository: git clone https://github.com/NullCrew/Disastroid.git
+
+2. Switch to the project directory: cd Disastroid
+
+3. Install dependencies: pip3 install -r "requirements.txt"
+
+4. Start the server: python3 manage.py runserver
+
+5. Navigate to the site: http://localhost:8000

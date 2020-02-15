@@ -1,6 +1,6 @@
 # Disastroid
 
-A one stop solution to avoid getting caught in disasters.
+A one-stop solution to avoid getting caught in disasters.
 
 ## Features
 
