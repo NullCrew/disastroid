@@ -404,9 +404,9 @@ def add_to_list(headers, cloud):
 @csrf_exempt
 def upload(request):
 	cloudinary.config(
-		cloud_name="degz2imaz",
-		api_key="",
-		api_secret=""
+		cloud_name="ibhanu",
+		api_key="518449793756128",
+		api_secret="KRjQg_J96Tn7fkKBVT8g9B16rlU"
 	)
 	if request.method == 'POST':
 		# print 'yes'
@@ -481,9 +481,9 @@ def find_missing_person(request):
 			return render(request, 'find_person.html', {'victim': victim, 'notfound': False})
 		else:
 			cloudinary.config(
-				cloud_name="degz2imaz",
-				api_key="",
-				api_secret=""
+				cloud_name="ibhanu",
+				api_key="518449793756128",
+				api_secret="KRjQg_J96Tn7fkKBVT8g9B16rlU"
 			)
 			image = request.FILES['image']
 			handle_uploaded_file(image)
