@@ -126,6 +126,12 @@ form > input { margin-right: 15px; }
 						if (text["found"] == "False"){
 							console.log('text:' + text);
 							document.getElementById('alerts').innerHTML = 
+								  '<strong>Face not found!</strong>' +
+								'</div>';
+							document.getElementById('hiddenForm').style.display = 'block';
+						}if (text["found"] == "unknown"){
+							console.log('text:' + text);
+							document.getElementById('alerts').innerHTML = 
 								'<div class="alert alert-success" style="color: black;">' + 
 								  '<strong>Hand out relief!</strong>' +
 								'</div>';
