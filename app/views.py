@@ -12,13 +12,18 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Victim
 from django.http import HttpResponse, JsonResponse
 import cloudinary
+cloudinary.config(
+				cloud_name="ibhanu",
+				api_key="518449793756128",
+				api_secret="KRjQg_J96Tn7fkKBVT8g9B16rlU",
+				upload_prefix = 'http://api.cloudinary.com'
+			)
 import cloudinary.uploader
 import cloudinary.api
 import requests
 import urllib.request, urllib.parse, urllib.error
 import os
 from PyDictionary import PyDictionary
-
 
 # import simplejson as simplejson
 
@@ -404,17 +409,18 @@ def add_to_list(headers, cloud):
 @csrf_exempt
 def upload(request):
 	cloudinary.config(
-		cloud_name="ibhanu",
-		api_key="518449793756128",
-		api_secret="KRjQg_J96Tn7fkKBVT8g9B16rlU"
-	)
+				cloud_name="ibhanu",
+				api_key="518449793756128",
+				api_secret="KRjQg_J96Tn7fkKBVT8g9B16rlU",
+				upload_prefix = 'http://api.cloudinary.com'
+			)
 	if request.method == 'POST':
 		# print 'yes'
 		handle_uploaded_file(request.FILES['webcam'])
 		headers = {
 			# Request headers
 			'Content-Type'             : 'application/json',
-			'Ocp-Apim-Subscription-Key': '',
+			'Ocp-Apim-Subscription-Key': 'KRjQg_J96Tn7fkKBVT8g9B16rlU',
 		}
 		module_dir = os.path.dirname(__file__)
 		img = os.path.join(module_dir, 'media/pictures/img.jpg')
@@ -422,6 +428,8 @@ def upload(request):
 		victim = Victim.objects.create(url=cloud['url'])
 		# victim = Victim.objects.create(picture=request.FILES['webcam'])
 		r = detect_face(headers, cloud)
+		print(r)
+		print(r.json())
 		faceId = r.json()[0]['faceId']
 		r = find_similar(headers, cloud, faceId)
 
@@ -480,11 +488,11 @@ def find_missing_person(request):
 			victim = Victim.objects.get(name=name)
 			return render(request, 'find_person.html', {'victim': victim, 'notfound': False})
 		else:
-			cloudinary.config(
-				cloud_name="ibhanu",
-				api_key="518449793756128",
-				api_secret="KRjQg_J96Tn7fkKBVT8g9B16rlU"
-			)
+			# cloudinary.config(
+			# 	cloud_name="ibhanu",
+			# 	api_key="518449793756128",
+			# 	api_secret="KRjQg_J96Tn7fkKBVT8g9B16rlU"
+			# )
 			image = request.FILES['image']
 			handle_uploaded_file(image)
 			headers = {

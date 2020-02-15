@@ -8,7 +8,7 @@ def search(dir):
             file_contents = f.read()
             #if "AIzaSyAbg4XZm-68VmFtLnKWSAnNanO1oNTukT4" in file_contents:
             #if "AIzaSyDkM2fJKHovUnCx5AihUbQc136XgGutASc" in file_contents:
-            if "jquery-jvectormap-2.0.3" in file_contents:
+            if "/v1_1/ibhanu/image/upload" in file_contents:
                     print
                     print "*********************************************************************************"
                     print dir,"/", f.name

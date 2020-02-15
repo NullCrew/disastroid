@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',
     'classifier',
-    'bootstrap3'
+    'bootstrap3',
+    'cloudinary'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -106,6 +107,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
+
+CLOUDINARY = {
+  'cloud_name': 'ibhanu',  
+  'api_key': '518449793756128',  
+  'api_secret': 'KRjQg_J96Tn7fkKBVT8g9B16rlU',  
+  'upload_prefix': 'http://api.cloudinary.com'
+}
 
 LANGUAGE_CODE = 'en-us'
 
