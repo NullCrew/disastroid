@@ -1,2 +1,0 @@
-Add twitter key in classifier/views.py
-Add twilio key for sms in app/views.py (send_sms function)
