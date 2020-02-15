@@ -484,43 +484,78 @@ def find_missing_person(request):
 	if request.method == 'POST':
 		notfound = False
 		global imgname
-		if request.POST.get('name'):
-			name = request.POST.get('name')
-			victim = Victim.objects.get(name=name)
-			return render(request, 'find_person.html', {'victim': victim, 'notfound': False})
+
+		# if request.POST.get('name'):
+		# 	name = request.POST.get('name')
+		# 	victim = Victim.objects.get(name=name)
+		# 	return render(request, 'find_person.html', {'victim': victim, 'notfound': False})
+		# else:
+		# 	image = request.FILES['image']
+		# 	handle_uploaded_file(image)
+		# 	module_dir = os.path.dirname(__file__)
+		# 	img = os.path.join(module_dir, imgname)
+		# 	frResponse = str(fr.predict1(img))
+		# 	print(frResponse)
+		# 	if frResponse == 'unknown':
+
+		# 		res = 'unknown face'
+		# 		print(res)
+		# 		notfound = True
+
+		# 	elif frResponse == 'False':
+		# 		res = 'Face not found'
+		# 		print(res)
+		# 		notfound = True
+		# 	else:
+		# 		res = "Matched with: "+ frResponse
+		# 		print(res)
+		# 		notfound = False
+
+
+			
+		# 	# if len(r.json()) > 0:
+		# 	# 	faceId = r.json()[0]['persistedFaceId']
+		# 	# 	print(faceId)
+		# 	# 	victim = ''
+		# 	# 	try:
+		# 	# 		print('here')
+		# 	# 		victim = Victim.objects.get(pic_id=faceId)
+		# 	# 		print('here2')
+		# 	# 	except Exception as e:
+		# 	# 		notfound = True
+		# 	# else:
+		# 	# 	notfound = True
+		# 	return render(request, 'find_person.html', {'victim': victim, 'notfound': notfound})image = request.FILES['image']
+		name = request.POST.get('name')
+		age = request.POST.get('age')
+		number = request.POST.get('number')
+		image = request.FILES['image']
+		victim = Victim.objects.latest('url')
+		handle_uploaded_file(image)
+		module_dir = os.path.dirname(__file__)
+		img = os.path.join(module_dir, imgname)
+		frResponse = str(fr.predict1(img))
+		print(frResponse)
+		if frResponse == 'unknown':
+
+			res = 'unknown face'
+			print(res)
+			notfound = True
+
+		elif frResponse == 'False':
+			res = 'Face not found'
+			print(res)
+			notfound = True
 		else:
-			# cloudinary.config(
-			# 	cloud_name="ibhanu",
-			# 	api_key="518449793756128",
-			# 	api_secret="KRjQg_J96Tn7fkKBVT8g9B16rlU"
-			# )
-			image = request.FILES['image']
-			handle_uploaded_file(image)
-			headers = {
-				# Request headers
-				'Content-Type'             : 'application/json',
-				'Ocp-Apim-Subscription-Key': '',
-			}
-			module_dir = os.path.dirname(__file__)
-			img = os.path.join(module_dir, imgname)
-			cloud = cloudinary.uploader.upload(img)
-			r = detect_face(headers, cloud)
-			faceId = r.json()[0]['faceId']
-			print(faceId)
-			r = find_similar(headers, cloud, faceId)
-			if len(r.json()) > 0:
-				faceId = r.json()[0]['persistedFaceId']
-				print(faceId)
-				victim = ''
-				try:
-					print('here')
-					victim = Victim.objects.get(pic_id=faceId)
-					print('here2')
-				except Exception as e:
-					notfound = True
-			else:
-				notfound = True
-			return render(request, 'find_person.html', {'victim': victim, 'notfound': notfound})
+			res = "Matched with: "+ frResponse
+			print(res)
+			notfound = False
+			victim.name = frResponse
+			victim.age = age
+			victim.number = number
+			victim.save()
+
+		return render(request, 'find_person.html', {'victim': victim, 'notfound': notfound})
 
 	else:
 		return render(request, 'find_person.html', {'notfound': False})
