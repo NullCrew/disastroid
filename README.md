@@ -20,6 +20,8 @@ A one-stop solution to avoid getting caught in disasters.
 
 * The families can search for their relatives by just uploading their photos.
 
+## Video:
+
 [![Demo](https://img.youtube.com/vi/elCnni0xKNk/0.jpg)](https://www.youtube.com/watch?v=elCnni0xKNk)
 
 
