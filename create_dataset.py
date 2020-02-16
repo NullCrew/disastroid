@@ -21,5 +21,4 @@ def create_image_dataset(uname):
 		if cpt == 10:
 			cv2.destroyAllWindows()
 			break
-			
-# create_image_dataset()
+

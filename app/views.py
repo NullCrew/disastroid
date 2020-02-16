@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Event, Center, Message, Citizen, Copy, Hospital, sms, Attacker
 from django.http import HttpResponse, HttpResponseRedirect
-# Create your views here.
 from twilio.rest import Client
 import urllib.request, urllib.error, urllib.parse
 import json
@@ -11,26 +10,16 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from .models import Victim
 from django.http import HttpResponse, JsonResponse
-import cloudinary
 import calendar
 import time
 import fr
 import create_dataset
 ts = str(calendar.timegm(time.gmtime()))
-cloudinary.config(
-				cloud_name="ibhanu",
-				api_key="518449793756128",
-				api_secret="KRjQg_J96Tn7fkKBVT8g9B16rlU",
-				upload_prefix = 'http://api.cloudinary.com'
-			)
-import cloudinary.uploader
-import cloudinary.api
 import requests
 import urllib.request, urllib.parse, urllib.error
 import os
 from PyDictionary import PyDictionary
 imgname = 'media/pictures/img.jpg'
-# import simplejson as simplejson
 
 def heatmap(request):
 	return render(request, 'heatmap.html')
@@ -45,10 +34,6 @@ def get_location(request):
 		event.lat = lattitude
 		event.lng = longitude
 		event.save()
-		# event = Event.objects.get(id=id)
-		# event.location = str(locations.id)
-		# event.save()
-		# loc_id = locations.id
 		print(lattitude)
 		print(longitude)
 		return HttpResponseRedirect('/disaster/' + str(event.id))
@@ -67,7 +52,6 @@ def disaster_information(request, did):
 		event.description = description
 		event.radius = radius
 		event.save()
-		# send_sms('HHAHAHAHA','+919833175929')
 		return HttpResponseRedirect('/suggest/' + str(did))
 
 	else:
@@ -162,12 +146,9 @@ def suggest(request, did):
 	message = 'A disaster ' + str(event.name) + ' has struck your locality. Kindly be careful.' + ' Description ' + str(
 		event.description) + ' The nearest hospital is: ' + str(hosp.name) + '  at : ' + str(
 		hosp.vicinity) + ' Nearest Police Station ' + pol.name + ' at : ' + pol.vicinity + '  Thank You'
-	# number = '+919773876646'
-	# number = '+919930087431'
 	number = '+918904222327'
 	print(message)
 	send_sms(message, number)
-	# return render(request,'suggest.html')
 	return render(request, 'suggest.html', {'hosp': hospital_arr, 'pol': police_arr, 'did': did})
 
 	arr = Center.objects.all()
@@ -180,11 +161,6 @@ def retrieve_messages():
 	ACCOUNT_SID = "ACe7bf6e6156e9e765ca4067f186fa0955"
 	AUTH_TOKEN = "491b594692de8545d7782c8e97aaa9b9"
 	client = Client(ACCOUNT_SID, AUTH_TOKEN)
-	# client.messages.create(
-	# to=number,
-	# from_="+16155675585",
-	# body=message,
-	# )
 	smss = client.sms.messages.list()
 	for sms in smss:
 		print((sms.body))
@@ -230,11 +206,6 @@ def monitor(request):
 		# print dat
 		data.append(dat[1])
 		labels.append(dat[0])
-
-	# data = '[51, 30, 40, 28, 92, 50, 92]'
-	# labels = []
-	# labels.append('January')
-	# labels = "['January', 'February', 'March', 'April', 'May', 'June', 'July']"
 	# return HttpResponse('ok')
 	for idx, label in enumerate(labels):
 		syns = dictionary.synonym(label)
@@ -365,62 +336,9 @@ def calc():
 def home(request):
 	return render(request, 'snap.html')
 
-
-def detect_face(headers, cloud):
-	params = urllib.parse.urlencode({
-		# Request parameters
-		'returnFaceId'       : 'true',
-		'returnFaceLandmarks': 'false'
-	})
-	body = {
-		"url": str(cloud['url'])
-	}
-
-	r = requests.post('https://westus.api.cognitive.microsoft.com/face/v1.0/detect', params=params, data=str(body),
-	                  headers=headers)
-
-	return r
-
-
-def find_similar(headers, cloud, faceId):
-	body = {
-		# Request parameters
-		"faceId"    : str(faceId),
-		"faceListId": "my-face-list",
-		"mode"      : "matchPerson"
-	}
-
-	r = requests.post('https://westus.api.cognitive.microsoft.com/face/v1.0/findsimilars', data=str(body),
-	                  headers=headers)
-	return r
-
-
-def add_to_list(headers, cloud):
-	params = urllib.parse.urlencode({
-		# Request parameters
-		'faceListId': 'my-face-list'
-	})
-	listId = 'my-face-list'
-	body = {
-		"url": str(cloud['url'])
-	}
-	r = requests.post('https://westus.api.cognitive.microsoft.com/face/v1.0/facelists/' + listId + '/persistedFaces',
-	                  params=params, data=str(body),
-	                  headers=headers)
-
-	return r
-
-
 @csrf_exempt
 def upload(request):
-	cloudinary.config(
-				cloud_name="ibhanu",
-				api_key="518449793756128",
-				api_secret="KRjQg_J96Tn7fkKBVT8g9B16rlU",
-				upload_prefix = 'http://api.cloudinary.com'
-			)
 	if request.method == 'POST':
-		# print 'yes'
 		global imgname
 		handle_uploaded_file(request.FILES['webcam'])
 		module_dir = os.path.dirname(__file__)
@@ -484,48 +402,6 @@ def find_missing_person(request):
 	if request.method == 'POST':
 		notfound = False
 		global imgname
-
-		# if request.POST.get('name'):
-		# 	name = request.POST.get('name')
-		# 	victim = Victim.objects.get(name=name)
-		# 	return render(request, 'find_person.html', {'victim': victim, 'notfound': False})
-		# else:
-		# 	image = request.FILES['image']
-		# 	handle_uploaded_file(image)
-		# 	module_dir = os.path.dirname(__file__)
-		# 	img = os.path.join(module_dir, imgname)
-		# 	frResponse = str(fr.predict1(img))
-		# 	print(frResponse)
-		# 	if frResponse == 'unknown':
-
-		# 		res = 'unknown face'
-		# 		print(res)
-		# 		notfound = True
-
-		# 	elif frResponse == 'False':
-		# 		res = 'Face not found'
-		# 		print(res)
-		# 		notfound = True
-		# 	else:
-		# 		res = "Matched with: "+ frResponse
-		# 		print(res)
-		# 		notfound = False
-
-
-			
-		# 	# if len(r.json()) > 0:
-		# 	# 	faceId = r.json()[0]['persistedFaceId']
-		# 	# 	print(faceId)
-		# 	# 	victim = ''
-		# 	# 	try:
-		# 	# 		print('here')
-		# 	# 		victim = Victim.objects.get(pic_id=faceId)
-		# 	# 		print('here2')
-		# 	# 	except Exception as e:
-		# 	# 		notfound = True
-		# 	# else:
-		# 	# 	notfound = True
-		# 	return render(request, 'find_person.html', {'victim': victim, 'notfound': notfound})image = request.FILES['image']
 		name = request.POST.get('name')
 		age = request.POST.get('age')
 		number = request.POST.get('number')
@@ -626,23 +502,6 @@ def test_suggest(request, did):
 	return HttpResponse('lol')
 
 
-'''
-def cleanup(request):
-	ACCOUNT_SID = "ACdcf66daba8d15742f4f0d225b4cbe4d8"
-	AUTH_TOKEN = "f9a773d4cbaaedd0f4d15320e8a581e5"
- 	client = Client(ACCOUNT_SID, AUTH_TOKEN)
- 	messages = client.sms.messages.list()
-
- 	for message in messages:
- 		if(message.direction == 'inbound'):
- 			print message.body
- 			#message.media_list.delete()
- 			msg,found = sms.objects.get_or_create(message_id = message.sid)
- 			msg.body = message.body
- 			msg.number = message.from_
-			msg.save()
-
-'''
 
 
 def hospital_edit(request, hid):
