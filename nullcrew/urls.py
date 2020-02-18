@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^suggest/(\d+)$', views.suggest),
     url(r'^monitor/$',views.monitor),
     url(r'^test/',views.test),
+    url(r'^showimg/',views.showimg),
     url(r'^monitorcenter/(\d+)$', views.monitor_center),
     url(r'^hospitalportal/(\d+)$', views.hospital_portal),
     url(r'^upload/$', views.upload),

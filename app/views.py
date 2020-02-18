@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Event, Center, Message, Citizen, Copy, Hospital, sms, Attacker
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, FileResponse
 from twilio.rest import Client
 import urllib.request, urllib.error, urllib.parse
 import json
@@ -435,6 +435,18 @@ def find_missing_person(request):
 
 	else:
 		return render(request, 'find_person.html', {'notfound': False})
+
+def showimg(request):
+	# imgname = '/home/abhay/projects/Disastroid/app/media/pictures/img.jpg'
+	# img = os.path.join(module_dir, imgname)
+	imgname = 'media/pictures/img.jpg'
+	module_dir = os.path.dirname(__file__)
+	img = os.path.join(module_dir, imgname)
+	response = FileResponse(img)
+	# return response
+	with open(img, "rb") as f:
+		return HttpResponse(f.read(), content_type="image/jpeg")
+	# return render(request, 'showimg.html', {'image': img})
 
 
 def handle_uploaded_file(f):
