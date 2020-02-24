@@ -60,12 +60,12 @@ def disaster_information(request, did):
 
 
 def send_sms(message, number):
-	ACCOUNT_SID = "ACdcf66daba8d15742f4f0d225b4cbe4d8"
-	AUTH_TOKEN = "f9a773d4cbaaedd0f4d15320e8a581e5"
+	ACCOUNT_SID = "ACf14dd7e3f3566292c8fe8263a8a1b6f5"
+	AUTH_TOKEN = "52c76952b183ddc1835aa94c47596087"
 	client = Client(ACCOUNT_SID, AUTH_TOKEN)
 	client.messages.create(
 		to=number,
-		from_="+15303037664",
+		from_="+12017334720",
 		body=message,
 	)
 
