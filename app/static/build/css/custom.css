@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
 .daterangepicker .ranges li {
   color: #73879C; }
   .daterangepicker .ranges li.active, .daterangepicker .ranges li:hover {
@@ -221,7 +223,9 @@
 .profile_info span {
   font-size: 13px;
   line-height: 30px;
-  color: #BAB8B8; }
+  color: #BAB8B8; 
+  font-family: 'Roboto';
+}
 
 .profile_info h2 {
   font-size: 14px;
@@ -574,10 +578,12 @@ a:hover, a:focus {
 .nav.side-menu > li {
   position: relative;
   display: block;
-  cursor: pointer; }
+  cursor: pointer; 
+}
 
 .nav.side-menu > li > a {
-  margin-bottom: 6px; }
+  margin-bottom: 6px; 
+}
 
 .nav.side-menu > li > a:hover {
   color: #F2F5F7 !important; }

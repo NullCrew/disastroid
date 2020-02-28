@@ -43,7 +43,6 @@ django-bootstrap==0.2.4
 django-bootstrap3==8.2.1
 django-phonenumber-field==1.1.0
 django-twilio==0.8.0
-dlib==19.19.0
 docutils==0.12
 entrypoints==0.3
 enum34==1.1.6
@@ -114,9 +113,6 @@ pep8==1.7.0
 pexpect==4.0.1
 phonenumberslite==8.3.2
 pickleshare==0.7.4
-Pillow==3.3.1
-pkg-resources==0.0.0
-pkginfo==1.3.2
 ply==3.9
 prometheus-client==0.7.1
 prompt-toolkit==1.0.3
@@ -128,7 +124,6 @@ pycosat==0.6.1
 pycparser==2.14
 pycrypto==2.6.1
 pycryptodome==3.4.3
-pycurl==7.43.0
 PyDictionary==1.5.2
 pyethash==0.1.27
 pyflakes==1.3.0
