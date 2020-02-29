@@ -2713,7 +2713,7 @@ select.parsley-error {
     margin: 0 0 0 20px;
     padding: 3px 10px;
     color: #FFF;
-    border-radius: 3px 4px 4px 3px;
+    border-radius: 15px;
     background-color: #CE5454;
     max-width: 170px;
     white-space: pre;
@@ -2731,6 +2731,7 @@ select.parsley-error {
     width: 0;
     border-color: transparent #CE5454 transparent transparent;
     border-style: solid;
+    border-radius: 15px;
     border-width: 11px 7px;
     position: absolute;
     left: -13px;
@@ -4850,18 +4851,21 @@ ul.verticle_bars li {
 
 .alert-success {
     color: #ffffff;
+    border-radius: 20px;
     background-color: rgba(38, 185, 154, 0.88);
     border-color: rgba(38, 185, 154, 0.88)
 }
 
 .alert-info {
     color: #E9EDEF;
+    border-radius: 20px;
     background-color: rgba(52, 152, 219, 0.88);
     border-color: rgba(52, 152, 219, 0.88)
 }
 
 .alert-warning {
     color: #E9EDEF;
+    border-radius: 20px;
     background-color: rgba(243, 156, 18, 0.88);
     border-color: rgba(243, 156, 18, 0.88)
 }
