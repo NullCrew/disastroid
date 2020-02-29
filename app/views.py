@@ -20,7 +20,8 @@ import urllib.request, urllib.parse, urllib.error
 import os
 from PyDictionary import PyDictionary
 imgname = 'media/pictures/img.jpg'
-
+from spontit import SpontitResource
+resource = SpontitResource("ibhanu","WWVKHYFPKRIPA54NHAUWY22YVJFT46XODR79VOPJHZEPFH15MN7361O3UE2BP59A47GCDLNG9LMWBCPNRKNQB6N8H0HDFQ5LIHNT")
 def heatmap(request):
 	return render(request, 'heatmap.html')
 
@@ -68,6 +69,7 @@ def send_sms(message, number):
 		from_="+12017334720",
 		body=message,
 	)
+	response = resource.push(message)
 
 
 def suggest(request, did):
