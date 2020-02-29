@@ -73,9 +73,15 @@ A one-stop solution to avoid getting caught in disasters.
 `cd Disastroid`
 3. Install dependencies:
 `pip3 install -r "requirements.txt"`
-4. Start the server:
+4. Add your API keys in .env file:
+```
+TWILIO_SID=<Add your twilio account SID here>
+TWILIO_TOK=<Add your twilio authentication token here>
+TWILIO_NUM=<Add your twilio phone number here>
+```
+5. Start the server:
 `python3 manage.py runserver`
-5. Navigate to the site:
+6. Navigate to the site:
 `http://localhost:8000`
 
 

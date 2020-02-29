@@ -20,8 +20,23 @@ import urllib.request, urllib.parse, urllib.error
 import os
 from PyDictionary import PyDictionary
 imgname = 'media/pictures/img.jpg'
+
+#spontit details
 from spontit import SpontitResource
 resource = SpontitResource("ibhanu","WWVKHYFPKRIPA54NHAUWY22YVJFT46XODR79VOPJHZEPFH15MN7361O3UE2BP59A47GCDLNG9LMWBCPNRKNQB6N8H0HDFQ5LIHNT")
+from dotenv import load_dotenv
+load_dotenv()
+
+# OR, the same with increased verbosity
+load_dotenv(verbose=True)
+
+# OR, explicitly providing path to '.env'
+from pathlib import Path  # python3 only
+env_path = Path('.') / '.env'
+load_dotenv(dotenv_path=env_path)
+
+
+
 def heatmap(request):
 	return render(request, 'heatmap.html')
 
@@ -61,16 +76,14 @@ def disaster_information(request, did):
 
 
 def send_sms(message, number):
-	ACCOUNT_SID = "ACf14dd7e3f3566292c8fe8263a8a1b6f5"
-	AUTH_TOKEN = "52c76952b183ddc1835aa94c47596087"
+	ACCOUNT_SID = os.getenv('TWILIO_SID')
+	AUTH_TOKEN = os.getenv('TWILIO_TOK')
 	client = Client(ACCOUNT_SID, AUTH_TOKEN)
 	client.messages.create(
 		to=number,
-		from_="+12017334720",
+		from_=os.getenv('TWILIO_NUM'),
 		body=message,
 	)
-	response = resource.push(message)
-
 
 def suggest(request, did):
 	event = Event.objects.get(id=did)
@@ -148,9 +161,14 @@ def suggest(request, did):
 	message = 'A disaster ' + str(event.name) + ' has struck your locality. Kindly be careful.' + ' Description ' + str(
 		event.description) + ' The nearest hospital is: ' + str(hosp.name) + '  at : ' + str(
 		hosp.vicinity) + ' Nearest Police Station ' + pol.name + ' at : ' + pol.vicinity + '  Thank You'
-	number = '+918904222327'
+	number = '+919606811718'
+	spontitMsg = 'A disaster ' + str(event.name) + ' has struck your locality. Check your SMS for more details'
+	response = resource.push(spontitMsg)
 	print(message)
-	send_sms(message, number)
+	print()
+	print()
+	print(spontitMsg)
+	#send_sms(message, number)
 	return render(request, 'suggest.html', {'hosp': hospital_arr, 'pol': police_arr, 'did': did})
 
 	arr = Center.objects.all()
@@ -160,8 +178,8 @@ def suggest(request, did):
 
 
 def retrieve_messages():
-	ACCOUNT_SID = "ACe7bf6e6156e9e765ca4067f186fa0955"
-	AUTH_TOKEN = "491b594692de8545d7782c8e97aaa9b9"
+	ACCOUNT_SID = os.environ.get('TWILIO_SID')
+	AUTH_TOKEN = os.environ.get('TWILIO_TOK')
 	client = Client(ACCOUNT_SID, AUTH_TOKEN)
 	smss = client.sms.messages.list()
 	for sms in smss:
@@ -173,12 +191,12 @@ def retrieve_messages():
 def monitor(request):
 	dictionary = PyDictionary()
 
-	ACCOUNT_SID = "ACdcf66daba8d15742f4f0d225b4cbe4d8"
-	AUTH_TOKEN = "f9a773d4cbaaedd0f4d15320e8a581e5"
+	ACCOUNT_SID = os.environ.get('TWILIO_SID')
+	AUTH_TOKEN = os.environ.get('TWILIO_TOK')
 	client = Client(ACCOUNT_SID, AUTH_TOKEN)
 	messages = client.messages.list()
 	for message in messages:
-		if (message.direction == 'inbound' and message.from_ == '+15303037664'):
+		if (message.direction == 'inbound' and message.from_ == os.environ.get('TWILIO_NUM')):
 			print('hurray')
 			msg, notfound = sms.objects.get_or_create(message_id=message.sid)
 			if notfound:
@@ -310,8 +328,8 @@ def hospital_portal(request, hid):
 
 
 def calc():
-	ACCOUNT_SID = "ACdcf66daba8d15742f4f0d225b4cbe4d8"
-	AUTH_TOKEN = "f9a773d4cbaaedd0f4d15320e8a581e5"
+	ACCOUNT_SID = os.environ.get('TWILIO_SID')
+	AUTH_TOKEN = os.environ.get('TWILIO_TOK')
 	client = Client(ACCOUNT_SID, AUTH_TOKEN)
 	messages = client.sms.messages.list()
 	for message in messages:
@@ -519,13 +537,13 @@ def test_suggest(request, did):
 
 
 def hospital_edit(request, hid):
-	ACCOUNT_SID = "ACdcf66daba8d15742f4f0d225b4cbe4d8"
-	AUTH_TOKEN = "f9a773d4cbaaedd0f4d15320e8a581e5"
+	ACCOUNT_SID = os.environ.get('TWILIO_SID')
+	AUTH_TOKEN = os.environ.get('TWILIO_TOK')
 	client = Client(ACCOUNT_SID, AUTH_TOKEN)
 	messages = client.sms.messages.list()
 
 	for message in messages:
-		if (message.direction == 'inbound' and message.from_ == '+919833175929'):
+		if (message.direction == 'inbound' and message.from_ == os.environ.get('TWILIO_NUM')):
 			print((message.body))
 			# message.media_list.delete()
 			msg, not_found = sms.objects.get_or_create(message_id=message.sid)
