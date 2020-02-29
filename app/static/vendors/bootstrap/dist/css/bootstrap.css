@@ -4,8 +4,11 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
 html {
-  font-family: sans-serif;
+  font-family: 'Roboto', ;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
@@ -270,7 +273,7 @@ th {
   position: relative;
   top: 1px;
   display: inline-block;
-  font-family: 'Glyphicons Halflings';
+  font-family: 'Roboto', ;
   font-style: normal;
   font-weight: normal;
   line-height: 1;
