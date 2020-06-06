@@ -38,7 +38,7 @@ decorator==4.0.10
 defusedxml==0.6.0
 dill==0.2.5
 dj-database-url==0.4.1
-Django==1.10.4
+Django==1.11.29
 django-bootstrap==0.2.4
 django-bootstrap3==8.2.1
 django-environ==0.4.5
